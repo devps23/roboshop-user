@@ -1,3 +1,5 @@
+source /data/secrets.txt
+cat /data/secrets.txt
 if [ -z "$DOCUMENTDB" ]; then
   echo Environment DOCUMENTDB is missing
   exit 1
