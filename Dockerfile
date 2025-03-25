@@ -2,7 +2,7 @@ FROM        docker.io/node:16
 RUN         apt-get update && apt-get install -y wget unzip curl && \
             apt-get clean && rm -rf /var/lib/apt/lists/*
 WORKDIR     /tmp
-RUN         curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip
+RUN         curl -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip
 RUN         unzip /tmp/user.zip
 RUN         mkdir -p app
 WORKDIR     /app
