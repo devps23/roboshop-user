@@ -1,13 +1,18 @@
 FROM        docker.io/node:16
-RUN         mkdir /app
+RUN         apt-get update && apt-get install -y wget unzip curl && \
+            apt-get clean && rm -rf /var/lib/apt/lists/*
 WORKDIR     /tmp
-ADD         https://roboshop-artifacts.s3.amazonaws.com/user.zip /tmp/user.zip
+RUN         curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/user.zip
+RUN         mkdir -p app
 WORKDIR     /app
 RUN         unzip /tmp/user.zip -d /app/
 RUN         rm -rf /tmp/*
 RUN         npm install
-COPY        run.sh /
-ENTRYPOINT  ["bash","/run.sh"]
+RUN         wget -O /app/rds-combined-ca-bundle.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
+COPY         run.sh /
+ENTRYPOINT   ["bash","/run.sh"]
+
+
 
 # multi stage dockerfile
 # FROM        redhat/ubi9
